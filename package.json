@@ -1,0 +1,19 @@
+{
+  "name": "swfuploader",
+  "version": "0.1.0",
+  "main": "src/swfu",
+  "cortex": {
+    "dependencies": {},
+    "asyncDependencies": {},
+    "devDependencies": {
+      "neuron": "~5.1.0",
+      "assert": "~1.0.1"
+    },
+    "scripts": {}
+  },
+  "devDependencies": {
+    "express": "^4.2.0",
+    "body-parser": "^1.2.0",
+    "connect-multiparty": "^1.0.3"
+  }
+}
