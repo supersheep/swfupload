@@ -18,12 +18,12 @@ function SWFUpload(options){
     this.initSWFUpload(options);
 }
 
-    
+
 SWFUpload.prototype.initSWFUpload = function(settings) {
 
     var suc_callback = settings.swf_loaded_js_callback,
         err_callback = settings.swf_loaded_err_js_callback;
-        
+
     delete settings.swf_loaded_js_callback;
     delete settings.swf_loaded_err_js_callback;
 
@@ -41,18 +41,18 @@ SWFUpload.prototype.initSWFUpload = function(settings) {
         this.initSettings();
         this.loadFlash();
         this.displayDebugInfo();
-        
+
         // @by Kael Zhang
         // SWFUpload's swfUploadLoaded method is called by Flash
         // But for some evil browsers, such as TencentTraveller and 360SE, there's a failure in flash.external.ExternalInterface, and there's no calling back
-        // this method is called by js, and is a good time for checking externalInterface feature; 
+        // this method is called by js, and is a good time for checking externalInterface feature;
         suc_callback && setTimeout(suc_callback, 0);
-        
+
     } catch (ex) {
         delete SWFUpload.instances[this.movieName];
-        
+
         err_callback && err_callback.delay(0, this);
-        
+
         throw ex;
     }
 };
@@ -154,7 +154,7 @@ SWFUpload.prototype.initSettings = function() {
     this.ensureDefault("file_queue_limit", 0);
 
     // Flash Settings
-    this.ensureDefault("flash_url", "swfupload.swf");
+    this.ensureDefault("flash_url", require.resolve("../res/swfupload.swf"));
     this.ensureDefault("prevent_swf_caching", true);
 
     // Button Settings
@@ -227,7 +227,7 @@ SWFUpload.prototype.loadFlash = function() {
     if (targetElement == undefined) {
         throw "Could not find the placeholder element: " + this.settings.button_placeholder_id;
     }
-    
+
     // Append the container and load the flash
     tempParent = document.createElement("div");
     tempParent.innerHTML = this.getFlashHTML(); // Using innerHTML is non-standard but the only sensible way to dynamically add Flash in IE (and maybe other browsers)
@@ -502,7 +502,7 @@ SWFUpload.prototype.selectFiles = function() {
 
 
 // Public: startUpload starts uploading the first file in the queue unless
-// the optional parameter 'fileID' specifies the ID 
+// the optional parameter 'fileID' specifies the ID
 SWFUpload.prototype.startUpload = function(fileID) {
     this.callFlash("StartUpload", [fileID]);
 };
@@ -537,7 +537,7 @@ SWFUpload.prototype.getStats = function() {
     return this.callFlash("GetStats");
 };
 
-// Public: setStats changes the SWFUpload statistics.  You shouldn't need to 
+// Public: setStats changes the SWFUpload statistics.  You shouldn't need to
 // change the statistics but you can.  Changing the statistics does not
 // affect SWFUpload accept for the successful_uploads count which is used
 // by the upload_limit setting to determine how many files the user may upload.
@@ -662,7 +662,7 @@ SWFUpload.prototype.setDebugEnabled = function(debugEnabled) {
  * @ MODIFIED BY xuwei.chen
  * @ param {int} style
  */
-SWFUpload.prototype.setButtonStyle = function(style) {  
+SWFUpload.prototype.setButtonStyle = function(style) {
     this.settings.button_style = parseInt(style) || 0;
     this.callFlash("SetButtonStyle", [style]);
 };
@@ -728,9 +728,9 @@ SWFUpload.prototype.setButtonCursor = function(cursor) {
 Flash Event Interfaces
 These functions are used by Flash to trigger the various
 events.
-    
+
 All these functions a Private.
-    
+
 Because the ExternalInterface library is buggy the event calls
 are added to a queue and the queue then executed by a setTimeout.
 This ensures that events are executed in a determinate order and that
@@ -807,7 +807,7 @@ SWFUpload.prototype.testExternalInterface = function() {
     } catch (ex) {
         return false;
     }
-    
+
 };
 
 // Private: This event is called by Flash when it has finished loading. Don't modify this.
@@ -820,7 +820,7 @@ SWFUpload.prototype.flashReady = function() {
         this.debug("Flash called back ready but the flash movie can't be found.");
         return;
     }
-    
+
     this.cleanUp(movieElement);
 
     this.queueEvent("swfupload_loaded_handler");
@@ -948,7 +948,7 @@ for debug message to be sent.  The Debug Console adds
 itself to the body if necessary.
 
 The console is automatically scrolled as messages appear.
-    
+
 If you are using your own debug handler or when you deploy to production and
 have debug disabled you can remove these functions to reduce the file size
 and complexity.
@@ -1007,7 +1007,7 @@ SWFUpload.Console.writeLine = function(message) {
     } catch (ex) {
         alert("Exception: " + ex.name + " Message: " + ex.message);
     }
-};  
+};
 
 window.SWFUpload = SWFUpload;
 module.exports = SWFUpload;
