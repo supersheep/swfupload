@@ -1,6 +1,6 @@
 {
-  "name": "swfuploader",
-  "version": "0.1.1",
+  "name": "swfupload",
+  "version": "0.1.0",
   "main": "src/swfu",
   "cortex": {
     "dependencies": {},
